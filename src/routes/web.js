@@ -1,9 +1,9 @@
+const { getHomePage } = require('../controllers/homeController')
+
 const router = require('express').Router()
 
 const initWebRoutes = (app) => {
-    router.get('/', (req, res) => {
-        return res.send('Chao mung ban den voi binh nguyen vo tan')
-    })
+    router.get('/', getHomePage)
     return app.use('/', router)
 }
 
