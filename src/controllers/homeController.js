@@ -1,4 +1,5 @@
 const db = require('../models')
+const createNewUser = require('../services/CRUDService')
 
 const getHomePage = async (req, res) => {
     try {
@@ -13,6 +14,18 @@ const getHomePage = async (req, res) => {
     }
 }
 
+const crud = async (req, res) => {
+    return res.render('crud.ejs')
+}
+
+const postCRUD = async (req, res) => {
+    let msg = await createNewUser(req.body)
+    console.log(msg)
+    return res.send('post CRUD')
+}
+
 module.exports = {
-    getHomePage: getHomePage
+    getHomePage: getHomePage,
+    crud: crud,
+    postCRUD: postCRUD
 }
