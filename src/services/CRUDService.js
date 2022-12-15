@@ -90,7 +90,25 @@ const updateUser = (data) => {
                 resolve(allUsers)
             }
         } catch (error) {
-            console.log(`getUserById dang bi loi: ${error}`)
+            console.log(`updateUser dang bi loi: ${error}`)
+            reject(error)
+        }
+    })
+}
+
+const deleteUserById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: userId }
+            })
+
+            if(user) {
+                await user.destroy()
+            }
+            resolve()
+        } catch (error) {
+            console.log(`deleteUserById dang bi loi: ${error}`)
             reject(error)
         }
     })
@@ -100,5 +118,6 @@ module.exports = {
     createNewUser,
     getAllUsers,
     getUserById,
-    updateUser
+    updateUser,
+    deleteUserById
 }

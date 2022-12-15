@@ -1,4 +1,4 @@
-const { getHomePage, crud, postCRUD, getCRUD, editCRUD, putCRUD } = require('../controllers/homeController')
+const { getHomePage, crud, postCRUD, getCRUD, editCRUD, putCRUD, deleteCRUD } = require('../controllers/homeController')
 
 const router = require('express').Router()
 
@@ -9,6 +9,7 @@ const initWebRoutes = (app) => {
     router.get('/get-crud', getCRUD)
     router.get('/edit-crud', editCRUD)
     router.post('/put-crud', putCRUD)
+    router.get('/delete-crud', deleteCRUD)
     return app.use('/', router)
 }
 

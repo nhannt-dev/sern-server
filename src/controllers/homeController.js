@@ -1,5 +1,5 @@
 const db = require('../models')
-const { createNewUser, getAllUsers, getUserById, updateUser } = require('../services/CRUDService')
+const { createNewUser, getAllUsers, getUserById, updateUser, deleteUserById } = require('../services/CRUDService')
 
 const getHomePage = async (req, res) => {
     try {
@@ -51,11 +51,24 @@ const putCRUD = async (req, res) => {
     }
 }
 
+const deleteCRUD = async (req, res) => {
+    let userId = req.query.id
+    try {
+        await deleteUserById(userId)
+        let data = await getAllUsers()
+        return res.render('get_crud.ejs', { data: data })
+    } catch (error) {
+        console.log('data khong nhan duoc gia tri de xoa!', error)
+        return res.send('userId khong nhan duoc gia tri truyen vao!')
+    }
+}
+
 module.exports = {
     getHomePage: getHomePage,
     crud: crud,
     postCRUD: postCRUD,
     getCRUD: getCRUD,
     editCRUD: editCRUD,
-    putCRUD: putCRUD
+    putCRUD: putCRUD,
+    deleteCRUD: deleteCRUD
 }
