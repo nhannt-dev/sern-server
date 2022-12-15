@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/server.js",
-    "install": "node_modules/.bin/sequelize init"
+    "install": "node_modules/.bin/sequelize init",
+    "mgrt": "npx sequelize-cli db:migrate",
+    "seed": "npx sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",

@@ -1,10 +1,9 @@
 const db = require('../models')
-const { createNewUser, getAllUsers } = require('../services/CRUDService')
+const { createNewUser, getAllUsers, getUserById, updateUser } = require('../services/CRUDService')
 
 const getHomePage = async (req, res) => {
     try {
         let data = await db.User.findAll()
-        console.log(`Data tra ve co dang nhu sau: ${data}`)
         return res.render('homePage.ejs', {
             data: JSON.stringify(data)
         })
@@ -20,19 +19,43 @@ const crud = async (req, res) => {
 
 const postCRUD = async (req, res) => {
     let msg = await createNewUser(req.body)
-    console.log(`Day la req.body${req.body}`)
     return res.send('post CRUD')
 }
 
 const getCRUD = async (req, res) => {
     let data = await getAllUsers()
-    console.log('data---------->>', data)
-    return res.render('get_crud.ejs', { data })
+    return res.render('get_crud.ejs', { data: data })
+}
+
+const editCRUD = async (req, res) => {
+    let userId = req.query.id
+    try {
+        let userData = await getUserById(userId)
+        if(userData) {
+            return res.render('edit_crud.ejs', { user: userData })
+        }
+    } catch (error) {
+        console.log('userId khong nhan duoc gia tri truyen vao!', error)
+        return res.send('userId khong nhan duoc gia tri truyen vao!')
+    }
+}
+
+const putCRUD = async (req, res) => {
+    try {
+        let data = req.body
+        let allUser = await updateUser(data)
+        return res.render('get_crud.ejs', { data: allUser })
+    } catch (error) {
+        console.log('data khong nhan duoc gia tri truyen vao!', error)
+        return res.send('userId khong nhan duoc gia tri truyen vao!')
+    }
 }
 
 module.exports = {
     getHomePage: getHomePage,
     crud: crud,
     postCRUD: postCRUD,
-    getCRUD: getCRUD
+    getCRUD: getCRUD,
+    editCRUD: editCRUD,
+    putCRUD: putCRUD
 }
